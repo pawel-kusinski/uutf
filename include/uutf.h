@@ -97,6 +97,12 @@ static unsigned failed_tests = 0;
         return false;\
     }
 
+#define ASSERT_NE(a, b)\
+    if ((a) == (b)){\
+        printf("ASSERT_NE(%s, %s) at line %d failed\n", #a, #b, __LINE__);\
+        return false;\
+    }
+
 #define RUN_TEST_BEGIN()\
 int main() {\
 	printf(BREAK);\
