@@ -46,6 +46,17 @@
 #define COLOR_GREEN "\033[0;32m"
 #define COLOR_RESET "\033[0m"
 
+#define PRINT_VAL(x) _Generic((x),          \
+    int:                printf("%d", x),    \
+    unsigned int:       printf("%u", x),    \
+    long:               printf("%ld", x),   \
+    unsigned long:      printf("%lu", x),   \
+    long long:          printf("%lld", x),  \
+    unsigned long long: printf("%llu", x),  \
+    float:              printf("%.3f", x),  \
+    double:             printf("%.3f", x),  \
+    default:            printf("\"%s\"", x) \
+)
 
 #define TC_BEGIN(SUITE, NAME)\
 bool NAME(void){\
@@ -93,13 +104,15 @@ static unsigned failed_tests = 0;
 
 #define ASSERT_EQ(a, b)\
     if ((a) != (b)){\
-        printf("ASSERT_EQ(%s, %s) at line %d failed\n", #a, #b, __LINE__);\
+        printf("ASSERT_EQ(%s, %s) at line %d failed (", #a, #b, __LINE__);\
+        PRINT_VAL(a); printf(" != "); PRINT_VAL(b); printf(")\n");\
         return false;\
     }
 
 #define ASSERT_NE(a, b)\
     if ((a) == (b)){\
-        printf("ASSERT_NE(%s, %s) at line %d failed\n", #a, #b, __LINE__);\
+        printf("ASSERT_NE(%s, %s) at line %d failed (", #a, #b, __LINE__);\
+        PRINT_VAL(a); printf(" == "); PRINT_VAL(b); printf(")\n");\
         return false;\
     }
 
