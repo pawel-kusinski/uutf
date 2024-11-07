@@ -116,6 +116,14 @@ static unsigned failed_tests = 0;
         return false;\
     }
 
+#define ASSERT_GT(a, b)\
+    if ((a) <= (b)){\
+        printf("ASSERT_GT(%s, %s) at line %d failed (", #a, #b, __LINE__);\
+        PRINT_VAL(a); printf(" == "); PRINT_VAL(b); printf(")\n");\
+        return false;\
+    }
+
+
 #define RUN_TEST_BEGIN()\
 int main() {\
 	printf(BREAK);\
