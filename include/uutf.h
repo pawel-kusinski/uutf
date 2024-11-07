@@ -71,13 +71,13 @@ do {\
     printf("Running Test Case %s.%s...\n", #SUITE, #TESTNAME);\
     setup();\
     const bool success = TESTNAME();\
-    if (success) {passed_tests++;} else {failed_tests++;}\
+    if (success) {__uutf_global_passed_tests__++;} else {__uutf_global_failed_tests__++;}\
     teardown();\
     printf(INDENT "%s%s%s\n", success ? COLOR_GREEN : COLOR_RED, success ? "Passed" : "Failed", COLOR_RESET);\
 } while (0)
 
-static unsigned passed_tests = 0;
-static unsigned failed_tests = 0;
+static unsigned __uutf_global_passed_tests__ = 0;
+static unsigned __uutf_global_failed_tests__ = 0;
 
 #define EXPECT_TRUE(condition)\
     if (!(condition)){\
@@ -122,7 +122,6 @@ static unsigned failed_tests = 0;
         return false;\
     }
 
-
 #define RUN_TEST_BEGIN()\
 int main() {\
 	printf(BREAK);\
@@ -131,10 +130,11 @@ int main() {\
 
 #define RUN_TEST_END()\
     printf(BREAK);\
-    printf("Result: %s%s%s\n", failed_tests ? COLOR_RED : COLOR_GREEN, failed_tests ? "FAILURE" : "SUCCESS", COLOR_RESET);\
-    printf(INDENT "Passed: %u\n", passed_tests);\
-    printf(INDENT "Failed: %u\n", failed_tests);\
-    printf(INDENT "Total:  %u\n", passed_tests + failed_tests);\
+    printf("Result: %s%s%s\n", __uutf_global_failed_tests__ ? COLOR_RED : COLOR_GREEN,\
+                               __uutf_global_failed_tests__ ? "FAILURE" : "SUCCESS", COLOR_RESET);\
+    printf(INDENT "Passed: %u\n", __uutf_global_passed_tests__);\
+    printf(INDENT "Failed: %u\n", __uutf_global_failed_tests__);\
+    printf(INDENT "Total:  %u\n", __uutf_global_passed_tests__ + __uutf_global_failed_tests__);\
 	printf(BREAK);\
-	return failed_tests;\
+	return __uutf_global_failed_tests__;\
 }
