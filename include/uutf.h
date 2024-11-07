@@ -76,7 +76,6 @@ do {\
     printf(INDENT "%s%s%s\n", success ? COLOR_GREEN : COLOR_RED, success ? "Passed" : "Failed", COLOR_RESET);\
 } while (0)
 
-static bool success = true;
 static unsigned passed_tests = 0;
 static unsigned failed_tests = 0;
 
