@@ -1,7 +1,7 @@
 /*====================================================================================================================*\
  * MIT License
  *
- * Copyright (c) 2024 - 2025 Pawel Kusinski
+ * Copyright (c) 2025 Pawel Kusinski
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,58 +22,11 @@
  * SOFTWARE.
 \*====================================================================================================================*/
 
-#include "uutf.h"
+#include "uutf_self_test_macros.h"
 
-#define UUTF_SELF_TEST_CASES_BEGIN()\
-int main(void) {\
-    bool uutf_self_test_passed = true;\
-
-
-#define UUTF_SELF_TEST_CASES_END()\
-    printf("Test passed: %s\n", uutf_self_test_passed ? "YES" : "NO");\
-    return uutf_self_test_passed ? 0 : -1;\
-}
-
-#define MUST_PASS(x, ...)\
-    if (!_ ## x ## _WRAPPER (__VA_ARGS__)) {\
-        printf("MUST_PASS at line %d failed\n", __LINE__);\
-        uutf_self_test_passed = false;\
-    }
-
-#define MUST_FAIL(x, ...)\
-    if (_ ## x ## _WRAPPER (__VA_ARGS__)) {\
-        printf("MUST_FAIL at line %d failed\n", __LINE__);\
-        uutf_self_test_passed = false;\
-    }
-
-
-static bool _ASSERT_TRUE_WRAPPER(bool condition) {
-    ASSERT_TRUE(condition);
-    return true;
-}
-
-static bool _ASSERT_FALSE_WRAPPER(bool condition) {
-    ASSERT_FALSE(condition);
-    return true;
-}
-
-static bool _ASSERT_EQ_WRAPPER(int a, int b) {
-    ASSERT_EQ(a, b);
-    return true;
-}
-
-static bool _ASSERT_NE_WRAPPER(int a, int b) {
-    ASSERT_NE(a, b);
-    return true;
-}
-
-static bool _ASSERT_GT_WRAPPER(int a, int b) {
-    ASSERT_GT(a, b);
-    return true;
-}
-
-static bool _ASSERT_LT_WRAPPER(int a, int b) {
-    ASSERT_LT(a, b);
-    return true;
-}
-
+UUTF_SELF_TEST_CASES_BEGIN()
+    MUST_FAIL(ASSERT_LT, 7, 1)
+    MUST_FAIL(ASSERT_LT, 10, 10)
+    MUST_PASS(ASSERT_LT, 2, 4)
+    MUST_PASS(ASSERT_LT, -2, 48402)
+UUTF_SELF_TEST_CASES_END()

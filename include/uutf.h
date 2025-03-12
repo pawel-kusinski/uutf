@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2024 Pawel Kusinski
+ * Copyright (c) 2024 - 2025 Pawel Kusinski
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -109,6 +109,13 @@ static unsigned __uutf_global_failed_tests__ = 0;
 #define ASSERT_GT(a, b)\
     if ((a) <= (b)){\
         printf("ASSERT_GT(%s, %s) at line %d failed (", #a, #b, __LINE__);\
+        PRINT_VAL(a); printf(" == "); PRINT_VAL(b); printf(")\n");\
+        return false;\
+    }
+
+#define ASSERT_LT(a, b)\
+    if ((a) >= (b)){\
+        printf("ASSERT_LT(%s, %s) at line %d failed (", #a, #b, __LINE__);\
         PRINT_VAL(a); printf(" == "); PRINT_VAL(b); printf(")\n");\
         return false;\
     }
